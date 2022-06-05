@@ -5,6 +5,7 @@ import axios from "axios"
 const HomePage = () => {
 
     const [allPets, setAllPets] = useState([])
+    const [searchTerm,setSearchTerm]=useState("")
 
 
     useEffect(() => {
@@ -25,6 +26,7 @@ const HomePage = () => {
                 <h3 >These pets are looking for a good home</h3>
                 <Link to="/pets/new">Add a Pet to the shelter</Link>
             </div>
+            <p>Search a Pet:<input onChange={(e)=>setSearchTerm(e.target.value)} type="text" name="" /> </p> 
             <table className="table border">
                 <thead>
                     <tr>
@@ -34,7 +36,11 @@ const HomePage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                {allPets.map((pet,i)=>{
+
+                {
+                allPets.filter((pet)=>{
+                    return pet.name.toLowerCase().includes(searchTerm)
+                }).map((pet,i)=>{
                         return(
                     <tr>
                         <th scope="row">{pet.name}</th>
